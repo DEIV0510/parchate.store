@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PARCHATE.STORE | Parches Bordados y Personalizados en Bogotá</title>
+  <meta name="description" content="Parches bordados, más de 1.000 diseños y parches personalizados. Fabricamos en Bogotá con velcro o adhesivo. Compra online o cotiza tu diseño personalizado.">
+  <meta name="keywords" content="parches bordados, parches personalizados, parches Bogotá, parches moteros, parches rock, parches banderas, velcro, adhesivo">
+  <link rel="canonical" href="https://www.parchate.store/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PARCHATE.STORE">
+  <meta property="og:title" content="PARCHATE.STORE | Parches Bordados y Personalizados en Bogotá">
+  <meta property="og:description" content="Más de 1.000 diseños de parches bordados y fabricación de parches personalizados en Bogotá. Velcro o adhesivo.">
+  <meta property="og:url" content="https://www.parchate.store/">
+  <meta property="og:image" content="https://www.parchate.store/img/brand/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0A0810">
+  <link rel="icon" type="image/png" href="img/brand/favicon.png">
+  <link rel="apple-touch-icon" href="img/brand/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "PARCHATE.STORE",
+    "description": "Fabricación y venta de parches bordados y personalizados en Bogotá. Más de 1.000 diseños con velcro o adhesivo.",
+    "url": "https://www.parchate.store",
+    "logo": "https://www.parchate.store/img/brand/logo-full.webp",
+    "image": "https://www.parchate.store/img/brand/og-image.jpg",
+    "telephone": "+573212173973",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Carrera 24 # 45C-51",
+      "addressLocality": "Bogotá",
+      "addressCountry": "CO"
+    },
+    "sameAs": [
+      "https://www.instagram.com/parchate.store",
+      "https://www.facebook.com/parchate.store",
+      "https://www.tiktok.com/@parchate.store"
+    ],
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+<body data-page="home">
+
+  <!-- Pantalla de carga -->
+  <div class="loader" aria-hidden="true">
+    <img src="img/brand/logo-mark.webp" alt="" width="110" height="110">
+    <div class="stitch"></div>
+    <p>Bordando tu estilo…</p>
+  </div>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-in">
+        <div>
+          <span class="hero-kicker"><span class="dot"></span> Parches bordados · Hechos en Bogotá</span>
+          <h1>Más de 1.000 parches para llevar tu estilo a <span class="hl">otro nivel</span></h1>
+          <p class="hero-sub">Parches bordados de alta calidad, diseños únicos y personalizados. Fabricamos en Bogotá y hacemos realidad tus ideas — con velcro o adhesivo.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="parches.html">Explorar parches</a>
+            <a class="btn btn-ghost" href="personalizados.html">Crear mi parche</a>
+            <a class="btn btn-wa" id="heroWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="num">1.000+</div><div class="lbl">Diseños</div></div>
+            <div class="hero-stat"><div class="num">100%</div><div class="lbl">Fabricación propia</div></div>
+            <div class="hero-stat"><div class="num">10</div><div class="lbl">Categorías</div></div>
+          </div>
+          <div class="hero-strip" id="heroStrip" aria-hidden="true"></div>
+        </div>
+        <div class="hero-wall" id="heroWall" aria-hidden="true">
+          <div class="hw-glow"></div>
+        </div>
+      </div>
+      <div class="hero-scroll">Desliza</div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" id="marquee" aria-hidden="true"></div>
+
+    <!-- ============ CATEGORÍAS ============ -->
+    <section class="section" id="categorias">
+      <div class="container">
+        <div class="sec-head rv">
+          <span class="sec-kicker">Catálogo</span>
+          <h2 class="sec-title">Encuentra <span class="hl">el tuyo</span></h2>
+          <p class="sec-sub">Moteros, rock, animados, banderas, NASA, corte láser y mucho más. Diez universos de diseños bordados listos para despacho.</p>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ DESTACADOS ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head rv">
+          <span class="sec-kicker">Selección</span>
+          <h2 class="sec-title">Parches <span class="hl">destacados</span></h2>
+        </div>
+        <div class="p-grid" id="featGrid"></div>
+        <div class="sec-more rv"><a class="btn btn-ghost" href="parches.html">Ver todo el catálogo</a></div>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <div class="stats-band rv">
+      <div class="stats-in">
+        <div class="stat"><div class="num" data-count="1000" data-suffix="+">0</div><div class="lbl">Diseños listos</div></div>
+        <div class="stat"><div class="num" data-count="10">0</div><div class="lbl">Categorías</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">Fabricación propia</div></div>
+        <div class="stat"><div class="num">2</div><div class="lbl">Acabados: velcro y adhesivo</div></div>
+      </div>
+    </div>
+
+    <!-- ============ PERSONALIZADOS ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="custom-banner rv">
+          <div class="cb-text">
+            <span class="sec-kicker">Personalizados</span>
+            <h2>¿Tienes una idea? <span class="hl">La convertimos en parche.</span></h2>
+            <p>Envíanos tu imagen, logo, dibujo o idea y cotizamos la fabricación de tu parche personalizado. Lo bordamos nosotros mismos en Bogotá.</p>
+            <div class="cb-steps">
+              <div class="cb-step"><span class="n">1</span> Envía tu idea o imagen</div>
+              <div class="cb-step"><span class="n">2</span> Revisamos el diseño</div>
+              <div class="cb-step"><span class="n">3</span> Te cotizamos</div>
+              <div class="cb-step"><span class="n">4</span> Fabricamos tu parche</div>
+              <div class="cb-step"><span class="n">5</span> Recibes tu pedido</div>
+            </div>
+            <div class="cb-ctas">
+              <a class="btn btn-primary" href="personalizados.html">Cotizar mi parche</a>
+              <a class="btn btn-wa" id="customWa" href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+            </div>
+          </div>
+          <div class="cb-media" aria-hidden="true">
+            <div class="cb-grid" id="customGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO FUNCIONA ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head center rv">
+          <span class="sec-kicker">Así de fácil</span>
+          <h2 class="sec-title">Tu parche en <span class="hl">3 pasos</span></h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card rv"><div class="big-n">01</div><h3>Elige</h3><p>Encuentra tu diseño entre cientos de referencias listas para despacho inmediato.</p></div>
+          <div class="step-card rv rv-d1"><div class="big-n">02</div><h3>Personaliza</h3><p>¿No encuentras lo que buscas? Envíanos tu idea y la bordamos para ti.</p></div>
+          <div class="step-card rv rv-d2"><div class="big-n">03</div><h3>Pide</h3><p>Confirma tu pedido por WhatsApp y recíbelo donde estés.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BENEFICIOS ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head rv">
+          <span class="sec-kicker">Beneficios</span>
+          <h2 class="sec-title">¿Por qué <span class="hl">Parchate</span>?</h2>
+        </div>
+        <div class="benefits-grid" id="benefitsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ MÁS VENDIDOS ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head rv">
+          <span class="sec-kicker">Favoritos</span>
+          <h2 class="sec-title">Los más <span class="hl">buscados</span></h2>
+        </div>
+        <div class="p-grid" id="topGrid"></div>
+        <div class="sec-more rv"><a class="btn btn-ghost" href="parches.html?orden=vendidos">Ver más vendidos</a></div>
+      </div>
+    </section>
+
+    <!-- ============ NOSOTROS ============ -->
+    <section class="section" id="nosotros" style="padding-top:0">
+      <div class="container">
+        <div class="about">
+          <div class="about-media rv">
+            <img src="img/cat/hero-harley.webp" alt="Colección de parches bordados fabricados por PARCHATE.STORE" loading="lazy">
+            <span class="tag">📍 Tienda física en Bogotá</span>
+          </div>
+          <div class="about-text rv rv-d1">
+            <span class="sec-kicker">Nosotros</span>
+            <h2 class="sec-title">Tu estilo. <span class="hl">Tu parche.</span></h2>
+            <p>En PARCHATE.STORE no revendemos: <strong>fabricamos</strong>. Cada parche sale de nuestro taller en Bogotá, bordado en lona de alta resistencia con hilos de primera calidad.</p>
+            <p>Por eso podemos ofrecerte más de 1.000 diseños listos — y si el tuyo no existe, lo creamos contigo.</p>
+            <ul class="about-list" id="aboutList"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ UBICACIÓN ============ -->
+    <section class="section" id="ubicacion" style="padding-top:0">
+      <div class="container">
+        <div class="sec-head rv">
+          <span class="sec-kicker">Visítanos</span>
+          <h2 class="sec-title">Estamos en <span class="hl">Bogotá</span></h2>
+        </div>
+        <div class="location">
+          <div class="loc-card rv" id="locCard"></div>
+          <div class="loc-map rv rv-d1">
+            <iframe id="mapFrame" title="Mapa de ubicación de PARCHATE.STORE" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA FINAL ============ -->
+    <section class="final-cta">
+      <h2>¿No existe? <span class="hl">Lo fabricamos.</span></h2>
+      <p>Escríbenos y lleva tu parche. Lleva tu identidad.</p>
+      <div class="ctas">
+        <a class="btn btn-wa" id="finalWa" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn btn-ghost" href="parches.html">Explorar catálogo</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/data/productos.js"></script>
+  <script src="js/data/categorias.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

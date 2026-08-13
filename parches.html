@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Parches Bordados | PARCHATE.STORE</title>
+  <meta name="description" content="Explora más de 1.000 parches bordados: moteros, rock, animados, banderas, NASA, corte láser y más. Filtra, busca y pide por WhatsApp. Hechos en Bogotá.">
+  <link rel="canonical" href="https://www.parchate.store/parches.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PARCHATE.STORE">
+  <meta property="og:title" content="Catálogo de Parches Bordados | PARCHATE.STORE">
+  <meta property="og:description" content="Más de 1.000 parches bordados listos para despacho. Filtra por categoría, busca tu diseño y pide por WhatsApp.">
+  <meta property="og:image" content="https://www.parchate.store/img/brand/og-image.jpg">
+  <meta name="theme-color" content="#0A0810">
+  <link rel="icon" type="image/png" href="img/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body data-page="catalogo">
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Miga de pan">
+          <a href="index.html">Inicio</a><span class="sep">/</span><span id="bcHere">Parches</span>
+        </nav>
+        <h1 id="pageTitle">Explora nuestros <span class="hl">parches</span></h1>
+        <p id="pageSub">Más de 1.000 diseños bordados listos para despacho. Busca, filtra y arma tu pedido.</p>
+      </div>
+    </section>
+
+    <!-- Barra de búsqueda y filtros -->
+    <div class="catalog-bar">
+      <div class="cb-in">
+        <div class="cb-row1">
+          <label class="cat-search" for="q">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="m21 21-4.8-4.8m1.8-5.2a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+            <input type="search" id="q" placeholder="Busca: moto, rock, calavera, Colombia…" autocomplete="off" aria-label="Buscar en el catálogo">
+            <button class="clear" id="qClear" aria-label="Limpiar búsqueda" type="button">✕</button>
+          </label>
+          <select class="sort-select" id="sort" aria-label="Ordenar por">
+            <option value="relevancia">Relevancia</option>
+            <option value="vendidos">Más vendidos</option>
+            <option value="recientes">Más recientes</option>
+            <option value="precio-menor">Precio: menor a mayor</option>
+            <option value="precio-mayor">Precio: mayor a menor</option>
+            <option value="az">Nombre A–Z</option>
+          </select>
+          <button class="filter-toggle" id="filterToggle" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M7 12h10m-7 6h4"/></svg>
+            Filtros <span class="f-count" id="fCount">0</span>
+          </button>
+        </div>
+        <div class="cb-chips" id="catChips" role="group" aria-label="Categorías"></div>
+        <div class="filter-panel" id="filterPanel">
+          <div class="fp-group" id="fpSubWrap"><div class="fp-title">Subcategoría</div><div class="fp-opts" id="fpSub"></div></div>
+          <div class="fp-group"><div class="fp-title">Tipo</div><div class="fp-opts" id="fpTipo"></div></div>
+          <div class="fp-group"><div class="fp-title">Precio</div><div class="fp-opts" id="fpPrecio"></div></div>
+          <div class="fp-group"><div class="fp-title">Colección</div><div class="fp-opts" id="fpCol"></div></div>
+          <button class="fp-clear" id="fpClear" type="button">✕ Limpiar todos los filtros</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="catalog-body">
+      <div class="container">
+        <h2 class="sr-only">Resultados del catálogo</h2>
+        <div class="results-meta">
+          <span id="resultCount"></span>
+          <select class="sort-select" id="sortMobile" aria-label="Ordenar por" style="display:none;max-width:none">
+            <option value="relevancia">Relevancia</option>
+            <option value="vendidos">Más vendidos</option>
+            <option value="recientes">Más recientes</option>
+            <option value="precio-menor">Precio: menor a mayor</option>
+            <option value="precio-mayor">Precio: mayor a menor</option>
+            <option value="az">Nombre A–Z</option>
+          </select>
+        </div>
+        <div class="p-grid" id="grid"></div>
+        <div class="empty-state" id="empty" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path stroke-linecap="round" d="m21 21-4.8-4.8m1.8-5.2a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/><path stroke-linecap="round" d="M8.5 8.5l3 3m0-3-3 3" transform="translate(1.5 1.5)"/></svg>
+          <h3>No encontramos ese parche</h3>
+          <p>Prueba con otra palabra o categoría… o mejor aún: <strong>lo fabricamos para ti</strong>.</p>
+          <a class="btn btn-primary" href="personalizados.html">Cotizar parche personalizado</a>
+        </div>
+        <div class="load-more" id="loadMoreWrap" style="display:none">
+          <button class="btn btn-ghost" id="loadMore">Cargar más parches</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/data/productos.js"></script>
+  <script src="js/data/categorias.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>

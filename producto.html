@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parche Bordado | PARCHATE.STORE</title>
+  <meta name="description" content="Parche bordado de alta calidad fabricado en Bogotá. Disponible con velcro o adhesivo. Pide por WhatsApp.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="PARCHATE.STORE">
+  <meta name="theme-color" content="#0A0810">
+  <link rel="icon" type="image/png" href="img/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body data-page="producto">
+
+  <main id="main">
+    <section class="product-wrap">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Miga de pan">
+          <a href="index.html">Inicio</a><span class="sep">/</span>
+          <a href="parches.html">Parches</a><span class="sep">/</span>
+          <a href="#" id="bcCat">…</a><span class="sep">/</span>
+          <span id="bcName">Producto</span>
+        </nav>
+        <div class="product-grid" id="productGrid">
+          <!-- rendered por producto.js -->
+        </div>
+      </div>
+    </section>
+
+    <section class="related" id="relatedSec" style="display:none">
+      <div class="container">
+        <div class="sec-head">
+          <span class="sec-kicker">Combínalo</span>
+          <h2 class="sec-title">También te puede <span class="hl">gustar</span></h2>
+        </div>
+        <div class="p-grid" id="relatedGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada del parche" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Cerrar imagen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img id="lbImg" src="" alt="Parche ampliado">
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data/productos.js"></script>
+  <script src="js/data/categorias.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/producto.js"></script>
+</body>
+</html>
