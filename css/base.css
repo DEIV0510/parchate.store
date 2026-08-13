@@ -50,13 +50,23 @@ input,select,textarea{font-family:inherit;font-size:16px;color:var(--text)}
 ul,ol{list-style:none}
 ::selection{background:var(--magenta);color:#0A0810}
 
-body::before{ /* grano sutil */
+body::before{ /* grano sutil — translateZ(0) le da capa propia y evita re-rasterizados (titileo) */
   content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
+  transform:translateZ(0);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 }
 
-h1,h2,h3{line-height:1.12}
+h1,h2,h3{line-height:1.15}
 .display{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.5px}
+
+/* Los glifos de Archivo Black sobresalen de la caja de línea; en los tramos con
+   gradiente (background-clip:text) esa parte quedaría transparente y las letras
+   se verían cortadas. El padding inline amplía la zona pintable sin mover el layout. */
+.hl{
+  padding-block:.16em;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
 
 .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
 .section{padding-block:72px}
@@ -107,6 +117,7 @@ h1,h2,h3{line-height:1.12}
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid transparent;
   transition:background .25s,border-color .25s;
+  transform:translateZ(0);
 }
 .header.scrolled{background:rgba(10,8,16,.92);border-bottom-color:var(--line)}
 .header-in{
@@ -164,6 +175,14 @@ h1,h2,h3{line-height:1.12}
 @media(min-width:640px){.header .btn-wa{display:inline-flex;min-height:42px;padding:9px 18px;font-size:13.5px}}
 .burger{display:inline-flex}
 @media(min-width:1024px){.burger{display:none}}
+/* pantallas muy angostas (≤360px): header compacto para que nada se corte */
+@media(max-width:360px){
+  .header-in{padding-inline:12px;gap:10px}
+  .brand img{height:28px}
+  .brand .brand-store{display:none}
+  .icon-btn{width:40px}
+  .header-actions{gap:2px}
+}
 
 /* Buscador expandible del header */
 .search-bar{
@@ -276,12 +295,14 @@ h1,h2,h3{line-height:1.12}
   background:var(--wa);display:flex;align-items:center;justify-content:center;
   box-shadow:0 8px 26px rgba(37,211,102,.45);
   transition:transform .2s;
+  will-change:transform;
 }
 .wa-float:hover{transform:scale(1.08)}
 .wa-float svg{width:30px;height:30px;fill:#fff}
 .wa-float::after{
   content:'';position:absolute;inset:0;border-radius:50%;
   border:2px solid var(--wa);animation:waPulse 2.2s ease-out infinite;
+  will-change:transform,opacity;
 }
 @keyframes waPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.55);opacity:0}}
 
@@ -292,8 +313,9 @@ h1,h2,h3{line-height:1.12}
   transition:opacity .45s,visibility .45s;
 }
 .loader.hide{opacity:0;visibility:hidden}
-.loader img{width:110px;animation:loaderFloat 1.6s ease-in-out infinite}
-@keyframes loaderFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.loader img{width:110px;animation:loaderFloat 1.6s ease-in-out infinite;will-change:transform;backface-visibility:hidden}
+/* sin rotación: rotar imágenes pequeñas produce shimmer/titileo en los bordes */
+@keyframes loaderFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .loader .stitch{
   width:180px;height:4px;border-radius:4px;overflow:hidden;position:relative;
   background:rgba(255,255,255,.07);
@@ -352,7 +374,7 @@ h1,h2,h3{line-height:1.12}
 .p-media{
   position:relative;background:#fff;aspect-ratio:1/1;display:block;overflow:hidden;
 }
-.p-media img{width:100%;height:100%;object-fit:contain;padding:10%;transition:transform .35s ease}
+.p-media img{width:100%;height:100%;object-fit:contain;padding:10%;transition:transform .35s ease;backface-visibility:hidden}
 .p-card:hover .p-media img{transform:scale(1.07)}
 .p-badges{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
 .badge{

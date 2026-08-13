@@ -3,6 +3,9 @@
    Catálogo, producto individual y personalizados.
    ============================================================ */
 
+/* guarda anti-desborde: los hijos de estos grids no pueden inflar la columna */
+.product-grid > *,.quote-wrap > *,.qf-grid > *{min-width:0}
+
 /* ---------- Cabecera de página ---------- */
 .page-hero{
   position:relative;padding:calc(var(--header-h) + 54px) 0 40px;overflow:hidden;
