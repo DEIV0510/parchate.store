@@ -22,7 +22,7 @@ window.PARCHATE_CONFIG = {
      dashboard.epayco.com → Integraciones → Llaves API.
      Con la llave puesta, el carrito muestra el botón "Pagar online". */
   epayco: {
-    publicKey: '',               // ej: '4f3b1c...'
+    publicKey: '0765b80119f35ede2ce0267b9eb72d0b',  // llave PÚBLICA (la secreta nunca va aquí)
     test: false                  // true solo para pruebas
   }
 };
