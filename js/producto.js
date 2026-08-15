@@ -81,9 +81,10 @@ function render(){
       '<span class="p-cat">'+esc(p.s || catName(p.c))+' · Ref '+esc(p.sku)+'</span>' +
       '<h1>'+esc(p.n)+'</h1>' +
       '<div class="pd-price">' +
-        '<span class="now">'+fmt(p.sa||p.pr)+'</span>' +
-        (p.sa ? '<span class="was">'+fmt(p.pr)+'</span><span class="off">-'+off+'%</span>' : '') +
+        '<span class="now" id="pdNow">'+fmt(p.sa||p.pr)+'</span>' +
+        (p.sa ? '<span class="was" id="pdWas">'+fmt(p.pr)+'</span><span class="off">-'+off+'%</span>' : '') +
       '</div>' +
+      '<p class="pd-back-note" id="pdBackNote" style="display:none;color:var(--muted);font-size:13px;margin-top:6px"></p>' +
       '<p class="pd-desc">Bordado con precisión en lona de alta resistencia e hilos de primera calidad. Ideal para chaquetas, chalecos, morrales, gorras y más — se fija fácil sin necesidad de coser.</p>' +
       '<div class="pd-specs">' +
         (p.m ? '<div class="pd-spec"><div class="k">Medida</div><div class="v">'+esc(p.m)+'</div></div>' : '') +
@@ -95,7 +96,7 @@ function render(){
         '<div class="pd-opt-title">Respaldo</div>' +
         '<div class="back-opts" id="backOpts">' +
           '<button class="back-opt active" data-back="Adhesivo">Termo adhesivo</button>' +
-          '<button class="back-opt" data-back="Velcro">Velcro</button>' +
+          '<button class="back-opt" data-back="Velcro">Velcro' + (CFG.recargoVelcro ? ' <small style="opacity:.75">+' + fmt(CFG.recargoVelcro) + '</small>' : '') + '</button>' +
         '</div>' +
       '</div>' +
       '<div class="pd-buy">' +
@@ -112,18 +113,18 @@ function render(){
       '</div>' +
     '</div>';
 
-  updateWa();
+  updateWa(); updatePrice();
 
   /* cantidad */
-  $('#qMinus').addEventListener('click', ()=>{ if(qty>1){qty--; $('#qVal').textContent=qty; updateWa();} });
-  $('#qPlus').addEventListener('click', ()=>{ if(qty<99){qty++; $('#qVal').textContent=qty; updateWa();} });
+  $('#qMinus').addEventListener('click', ()=>{ if(qty>1){qty--; $('#qVal').textContent=qty; updateWa(); updatePrice();} });
+  $('#qPlus').addEventListener('click', ()=>{ if(qty<99){qty++; $('#qVal').textContent=qty; updateWa(); updatePrice();} });
 
   /* respaldo */
   $('#backOpts').addEventListener('click', e=>{
     const b = e.target.closest('[data-back]'); if(!b) return;
     back = b.dataset.back;
     document.querySelectorAll('.back-opt').forEach(o=>o.classList.toggle('active', o===b));
-    updateWa();
+    updateWa(); updatePrice();
   });
 
   /* carrito */
@@ -179,12 +180,31 @@ function render(){
   document.head.appendChild(s);
 }
 
+function surcharge(){ return back==='Velcro' ? (CFG.recargoVelcro||0) : 0; }
+
+function updatePrice(){
+  const p = prod;
+  const unit = (p.sa||p.pr) + surcharge();
+  $('#pdNow').textContent = fmt(unit);
+  const was = $('#pdWas');
+  if(was) was.textContent = fmt(p.pr + surcharge());
+  const note = $('#pdBackNote');
+  if(note){
+    if(surcharge()){
+      note.style.display = 'block';
+      note.textContent = 'Incluye recargo de ' + fmt(surcharge()) + ' por unidad por respaldo en velcro.';
+    } else note.style.display = 'none';
+  }
+}
+
 function updateWa(){
   const p = prod;
-  const total = (p.sa||p.pr)*qty;
+  const unit = (p.sa||p.pr) + surcharge();
+  const total = unit*qty;
   $('#waBtn').href = waLink(
     'Hola PARCHATE.STORE 👋 Estoy interesado en el parche *' + p.n + '* (Ref ' + p.sku + ')' +
-    '\n• Respaldo: ' + back + '\n• Cantidad: ' + qty + '\n• Valor: ' + fmt(total) +
+    '\n• Respaldo: ' + back + (surcharge() ? ' (+' + fmt(surcharge()) + ' c/u)' : '') +
+    '\n• Cantidad: ' + qty + '\n• Valor: ' + fmt(total) +
     '\n\n¿Está disponible?'
   );
 }

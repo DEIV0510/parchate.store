@@ -14,5 +14,15 @@ window.PARCHATE_CONFIG = {
   facebook: 'https://www.facebook.com/parchate.store',
   tiktok: 'https://www.tiktok.com/@parchate.store',
   web: 'https://www.parchate.store',
-  horario: 'Lun – Sáb · 9:00 am – 6:00 pm'
+  horario: 'Lun – Sáb · 9:00 am – 6:00 pm',
+  recargoVelcro: 3000,           // valor extra POR UNIDAD cuando eligen respaldo en velcro
+
+  /* ---- Pasarela de pagos ePayco (la misma cuenta del WooCommerce anterior) ----
+     Pega aquí la LLAVE PÚBLICA (PUBLIC_KEY) que aparece en
+     dashboard.epayco.com → Integraciones → Llaves API.
+     Con la llave puesta, el carrito muestra el botón "Pagar online". */
+  epayco: {
+    publicKey: '',               // ej: '4f3b1c...'
+    test: false                  // true solo para pruebas
+  }
 };

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estado de tu pago | PARCHATE.STORE</title>
+  <meta name="description" content="Resultado de tu pago en PARCHATE.STORE.">
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#0A0810">
+  <link rel="icon" type="image/png" href="img/brand/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    .pay-wrap{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:calc(var(--header-h) + 30px) 20px 60px}
+    .pay-card{
+      width:min(560px,100%);background:var(--surface);border:1px solid var(--line-strong);
+      border-radius:var(--radius-lg);padding:40px 30px;text-align:center;position:relative;overflow:hidden;
+    }
+    .pay-card::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(ellipse,rgba(160,68,255,.18),transparent 65%);pointer-events:none}
+    .pay-icon{width:82px;height:82px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;position:relative}
+    .pay-icon svg{width:40px;height:40px}
+    .pay-icon.ok{background:rgba(37,211,102,.14);border:2px solid var(--wa);color:var(--wa)}
+    .pay-icon.bad{background:rgba(255,77,109,.12);border:2px solid var(--danger);color:var(--danger)}
+    .pay-icon.wait{background:var(--grad-soft);border:2px solid var(--purple);color:var(--purple)}
+    .pay-card h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(22px,4vw,30px);position:relative}
+    .pay-card p{color:var(--muted);margin-top:10px;font-size:15px;position:relative}
+    .pay-data{
+      margin:24px auto 0;text-align:left;background:var(--bg-2);border:1px solid var(--line);
+      border-radius:14px;padding:16px 18px;display:grid;gap:8px;font-size:14px;position:relative;
+    }
+    .pay-data div{display:flex;justify-content:space-between;gap:14px}
+    .pay-data .k{color:var(--muted)}
+    .pay-data .v{font-weight:700;text-align:right;word-break:break-all}
+    .pay-ctas{display:grid;gap:10px;margin-top:26px;position:relative}
+    .spin{width:46px;height:46px;border-radius:50%;border:3px solid var(--line-strong);border-top-color:var(--magenta);margin:0 auto 20px;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body data-page="gracias">
+  <main id="main">
+    <div class="pay-wrap">
+      <div class="pay-card" id="payCard">
+        <div class="spin" id="paySpin"></div>
+        <h1 id="payTitle">Verificando tu pago…</h1>
+        <p id="payMsg">Un momento, estamos consultando el estado de la transacción.</p>
+        <div class="pay-data" id="payData" style="display:none"></div>
+        <div class="pay-ctas" id="payCtas"></div>
+      </div>
+    </div>
+  </main>
+  <script src="js/config.js"></script>
+  <script src="js/data/productos.js"></script>
+  <script src="js/data/categorias.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/gracias.js"></script>
+</body>
+</html>

@@ -17,6 +17,10 @@ const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'
 const norm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const waLink = msg => 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent(msg);
 const bySku = {}; PRODUCTS.forEach(p=>bySku[p.sku]=p);
+/* Recargo por respaldo: el velcro cuesta CFG.recargoVelcro extra por unidad */
+const backSurcharge = back => back==='Velcro' ? (CFG.recargoVelcro||0) : 0;
+const unitPrice = (p, back) => (p.sa||p.pr) + backSurcharge(back);
+window.PARCHATE_PRICE = { backSurcharge, unitPrice };
 const catName = id => { const c = CATS.find(c=>c.id===id); return c ? c.name : id; };
 const imgP  = sku => 'img/p/' + sku + '.webp';
 const imgPL = sku => 'img/p/' + sku + '-lg.webp';
@@ -51,7 +55,7 @@ function cartGet(){
 }
 function cartSet(items){ localStorage.setItem(CART_KEY, JSON.stringify(items)); updateCartBadge(); renderCart(); }
 function cartCount(){ return cartGet().reduce((a,i)=>a+i.qty,0); }
-function cartTotal(){ return cartGet().reduce((a,i)=>{ const p=bySku[i.sku]; return a + (p ? (p.sa||p.pr)*i.qty : 0); },0); }
+function cartTotal(){ return cartGet().reduce((a,i)=>{ const p=bySku[i.sku]; return a + (p ? unitPrice(p, i.back)*i.qty : 0); },0); }
 function cartAdd(sku, qty, back){
   const p = bySku[sku]; if(!p) return;
   qty = qty||1; back = back||'Por definir';
@@ -83,8 +87,9 @@ function cartMessage(){
   const items = cartGet();
   const lines = items.map(i=>{
     const p = bySku[i.sku]; if(!p) return '';
-    const back = i.back!=='Por definir' ? ' · ' + i.back : '';
-    return '• ' + p.n + ' (Ref ' + p.sku + ')' + back + ' ×' + i.qty + ' — ' + fmt((p.sa||p.pr)*i.qty);
+    const extra = backSurcharge(i.back);
+    const back = i.back!=='Por definir' ? ' · ' + i.back + (extra ? ' (+' + fmt(extra) + ' c/u)' : '') : '';
+    return '• ' + p.n + ' (Ref ' + p.sku + ')' + back + ' ×' + i.qty + ' — ' + fmt(unitPrice(p, i.back)*i.qty);
   }).filter(Boolean);
   return 'Hola PARCHATE.STORE 👋\nQuiero realizar el siguiente pedido:\n\n' + lines.join('\n') +
     '\n\nTotal: ' + fmt(cartTotal()) + '\n\nQuedo atento para confirmar disponibilidad y envío.';
@@ -251,8 +256,8 @@ function renderCart(){
     return '<div class="cart-item">' +
       '<img src="' + imgP(p.sku) + '" alt="' + esc(p.n) + '" loading="lazy">' +
       '<div><div class="ci-name">' + esc(p.n) + '</div>' +
-        '<div class="ci-meta">Ref ' + esc(p.sku) + (i.back!=='Por definir' ? ' · ' + esc(i.back) : '') + '</div>' +
-        '<div class="ci-price">' + fmt((p.sa||p.pr)*i.qty) + '</div></div>' +
+        '<div class="ci-meta">Ref ' + esc(p.sku) + (i.back!=='Por definir' ? ' · ' + esc(i.back) + (backSurcharge(i.back) ? ' (+' + fmt(backSurcharge(i.back)) + ')' : '') : '') + '</div>' +
+        '<div class="ci-price">' + fmt(unitPrice(p, i.back)*i.qty) + '</div></div>' +
       '<div class="ci-right">' +
         '<button class="ci-remove" data-rm="' + esc(p.sku) + '|' + esc(i.back) + '" aria-label="Quitar ' + esc(p.n) + '">' + SVG.trash + '</button>' +
         '<div class="qty">' +
@@ -262,10 +267,61 @@ function renderCart(){
         '</div>' +
       '</div></div>';
   }).join('');
+  const canPay = CFG.epayco && CFG.epayco.publicKey;
   foot.innerHTML =
     '<div class="cart-total"><span class="lbl">Total (' + cartCount() + ' parches)</span><span class="val">' + fmt(cartTotal()) + '</span></div>' +
     '<a class="btn btn-wa btn-block" target="_blank" rel="noopener" href="' + waLink(cartMessage()) + '">' + SVG.wa + ' Pedir por WhatsApp</a>' +
-    '<p class="cart-note">Al enviar tu pedido confirmamos disponibilidad, envío y forma de pago.</p>';
+    (canPay ? '<button class="btn btn-primary btn-block" id="payBtn" style="margin-top:10px">💳 Pagar online</button>' : '') +
+    '<p class="cart-note">' + (canPay ? 'Paga con tarjeta, PSE o Nequi vía ePayco, o pide por WhatsApp.' : 'Al enviar tu pedido confirmamos disponibilidad, envío y forma de pago.') + '</p>';
+  const payBtn = $('#payBtn');
+  if(payBtn) payBtn.addEventListener('click', payOnline);
+}
+
+/* ---------- Pago online (ePayco checkout onpage) ---------- */
+let epaycoLoading = null;
+function loadEpayco(){
+  if(window.ePayco) return Promise.resolve();
+  if(epaycoLoading) return epaycoLoading;
+  epaycoLoading = new Promise((res, rej)=>{
+    const s = document.createElement('script');
+    s.src = 'https://checkout.epayco.co/checkout.js';
+    s.onload = res;
+    s.onerror = ()=>{ epaycoLoading = null; rej(new Error('epayco load')); };
+    document.head.appendChild(s);
+  });
+  return epaycoLoading;
+}
+function payOnline(){
+  const items = cartGet();
+  if(!items.length) return;
+  const total = cartTotal();
+  const btn = $('#payBtn');
+  if(btn){ btn.disabled = true; btn.textContent = 'Abriendo pago seguro…'; }
+  const invoice = 'PS-' + Date.now();
+  const resumen = items.map(i=>{ const p=bySku[i.sku]; return p ? p.n + ' x' + i.qty : ''; }).filter(Boolean).join(', ').slice(0,180);
+  /* guarda el pedido para la página de gracias */
+  localStorage.setItem('parchate_last_order', JSON.stringify({ invoice, total, items, fecha: new Date().toISOString() }));
+  loadEpayco().then(()=>{
+    const handler = window.ePayco.checkout.configure({ key: CFG.epayco.publicKey, test: !!CFG.epayco.test });
+    handler.open({
+      name: 'Pedido PARCHATE.STORE',
+      description: resumen || 'Parches bordados',
+      invoice: invoice,
+      currency: 'cop',
+      amount: String(total),
+      tax_base: '0',
+      tax: '0',
+      country: 'co',
+      lang: 'es',
+      external: 'false',
+      response: CFG.web + '/gracias.html',
+      methodsDisable: []
+    });
+  }).catch(()=>{
+    toast('No pudimos abrir el pago online. Intenta de nuevo o pide por WhatsApp.');
+  }).finally(()=>{
+    if(btn){ btn.disabled = false; btn.innerHTML = '💳 Pagar online'; }
+  });
 }
 function updateCartBadge(){
   const el = $('#cartCount'); if(!el) return;
